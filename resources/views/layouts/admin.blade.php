@@ -44,7 +44,7 @@
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center mt-2" href="{{ route('dashboard') }}">
                     <div class="sidebar-brand-icon">
-                        {{-- <img src="../icon/android-icon-48x48.png" style="border-radius: 30%" alt="" srcset=""> --}}
+                        <img src="../icon/android-icon-48x48.png" style="border-radius: 30%" alt="" srcset="">
                     </div>
                     <div class="sidebar-brand-text mx-3">SD Negeri Leuwilaja III</div>
                 </a>
