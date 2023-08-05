@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
-use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,11 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-route::get('/login', [LoginController::class, 'index']);
-// route::post('/login', [LoginController::class, 'test']);
+Route::get('/', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::get('/daftar/siswa', [HomeController::class, 'siswa'])->name('daftar.siswa')->middleware('auth');
+Route::get('/daftar/soal', [HomeController::class, 'soal'])->name('daftar.soal')->middleware('auth');
+Route::get('/daftar/leaderboard', [HomeController::class, 'leaderboard'])->name('daftar.leaderboard')->middleware('auth');
+Route::get('/daftar/progres', [HomeController::class, 'progres'])->name('daftar.progres')->middleware('auth');
