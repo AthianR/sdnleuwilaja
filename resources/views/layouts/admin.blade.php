@@ -12,6 +12,8 @@
 
     <link rel="shortcut icon" href="../icon/favicon-32x32.png" type="image/x-icon"> 
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="../css/fontawesome.min.css">
     <link rel="stylesheet" href="../css/fontawesome/all.css">
@@ -25,8 +27,7 @@
 
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="/DataTables/datatables.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -38,12 +39,12 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion p-2" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center mt-2" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center mt-2" href="{{ route('dashboard') }}">
                     <div class="sidebar-brand-icon">
-                        <img src="../icon/ms-icon-70x70.png" style="border-radius: 30%" alt="" srcset="">
+                        {{-- <img src="../icon/android-icon-48x48.png" style="border-radius: 30%" alt="" srcset=""> --}}
                     </div>
                     <div class="sidebar-brand-text mx-3">SD Negeri Leuwilaja III</div>
                 </a>
@@ -52,7 +53,7 @@
                 <hr class="sidebar-divider my-0">
 
                 <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
+                <li class="nav-item active mt-4">
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
@@ -118,7 +119,7 @@
                         </button>
 
                         <!-- Topbar Search -->
-                        <form
+                        {{-- <form
                             class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             <div class="input-group">
                                 <input type="text" class="form-control bg-light border-0 small"
@@ -129,13 +130,13 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
 
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
 
                             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                            <li class="nav-item dropdown no-arrow d-sm-none">
+                            {{-- <li class="nav-item dropdown no-arrow d-sm-none">
                                 <a class="nav-link dropdown-toggle" href="#" id="searchDropdown"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -157,10 +158,10 @@
                                         </div>
                                     </form>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <!-- Nav Item - Alerts -->
-                            <li class="nav-item dropdown no-arrow mx-1">
+                            {{-- <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -211,10 +212,10 @@
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Show All
                                         Alerts</a>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <!-- Nav Item - Messages -->
-                            <li class="nav-item dropdown no-arrow mx-1">
+                            {{-- <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -284,7 +285,7 @@
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More
                                         Messages</a>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -356,18 +357,18 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Logout</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-body">Apakah yakin ingin keluar?</div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             @method('post')
-                            <button type="submit" class="btn btn-secondary">Logout</button>
+                            <button type="submit" class="btn btn-danger">Ya</button>
                           </form>
                         {{-- <a class="btn btn-primary" href="{{ route('logout') }}">Logout</a> --}}
                     </div>
@@ -393,8 +394,10 @@
     <script src="../js/demo/chart-area-demo.js"></script>
     <script src="../js/demo/chart-pie-demo.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-    <script src="/DataTables/datatables.js"></script>
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </body>
 
 </html>

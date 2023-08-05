@@ -16,8 +16,53 @@
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3">
+                    <div class="card-header py-3 d-flex justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa</h6>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"
+                                aria-hidden="true"></i></button>
+
+                        <!-- Add Data Modal-->
+                        <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ route('add.siswa') }}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="modal-body">
+                                            <div class="form-group d-flex justify-content-between">
+                                                <label for="NIK">NIS</label>
+                                                <input type="number" name="NIK" id="NIK" style="width: 70%"
+                                                    placeholder="NIS Siswa" required>
+                                            </div>
+
+                                            <div class="form-group d-flex justify-content-between">
+                                                <label for="nama">Nama Siswa</label>
+                                                <input type="text" name="nama" id="nama" style="width: 70%"
+                                                    placeholder="Nama Siswa" required>
+                                            </div>
+
+                                            <div class="form-group d-flex justify-content-between">
+                                                <label for="password">Password</label>
+                                                <input type="password" name="password" id="password" style="width: 70%"
+                                                    placeholder="Password" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-danger" type="button"
+                                                data-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -27,6 +72,8 @@
                                         <th>No</th>
                                         <th>NIS</th>
                                         <th>Nama Siswa</th>
+                                        <th>Password</th>
+                                        <th>Aksi</th>
                                         {{-- <th>Age</th>
                                 <th>Start date</th>
                                 <th>Salary</th> --}}
@@ -37,6 +84,8 @@
                                         <th>No</th>
                                         <th>NIS</th>
                                         <th>Nama Siswa</th>
+                                        <th>Password</th>
+                                        <th>Aksi</th>
                                         {{-- <th>Age</th>
                                 <th>Start date</th>
                                 <th>Salary</th> --}}
@@ -51,10 +100,21 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $item->NIK }}</td>
                                             <td>{{ $item->nama }}</td>
+                                            <td>{{ $item->password }}</td>
+                                            <td>
+                                                {{-- {{ route('siswa.edit', $siswa->id) }} --}}
+                                                <a href="" class="btn btn-primary"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                                <form action="{{ route('destroy.siswa', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{ $siswa->links() }}
                         </div>
                     </div>
                 </div>

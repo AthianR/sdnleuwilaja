@@ -25,3 +25,6 @@ Route::get('/daftar/siswa', [HomeController::class, 'siswa'])->name('daftar.sisw
 Route::get('/daftar/soal', [HomeController::class, 'soal'])->name('daftar.soal')->middleware('auth');
 Route::get('/daftar/leaderboard', [HomeController::class, 'leaderboard'])->name('daftar.leaderboard')->middleware('auth');
 Route::get('/daftar/progres', [HomeController::class, 'progres'])->name('daftar.progres')->middleware('auth');
+Route::get('/data/download/{format}', [HomeController::class, 'download'])->name('data.download')->middleware('auth');
+Route::post('/add/data/siswa', [HomeController::class, 'storeSiswa'])->name('add.siswa')->middleware('auth');
+Route::delete('destroy/siswa/{id}', [HomeController::class, 'destroySiswa'])->name('destroy.siswa');
