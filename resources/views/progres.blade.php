@@ -10,20 +10,27 @@
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Daftar Soal Quiz</h6>
-                        <button class="btn btn-primary">Tambah</button>
+                        <h6 class="m-0 font-weight-bold text-primary">Progres Siswa</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="dataTable" class="display" style="width:100%">
+                            <table id="dataProgres" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Jenis Soal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>NIS</th>
                                         <th>Nama Siswa</th>
+                                        <th>Jenis Soal</th>
                                         <th>Progres</th>
-                                        {{-- <th>No</th>
-                                        <th>Nama Siswa</th>
-                                        <th>Progres</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -33,7 +40,9 @@
                                     @foreach ($progres as $item)
                                         <tr>
                                             <td>{{ $no++ }}</td>
+                                            <td>{{ $item->nis}}</td>
                                             <td>{{ $item->nama_siswa }}</td>
+                                            <td>{{ $item->jenis_soal }}</td>
                                             <td>{{ $item->progres }}</td>
                                         </tr>
                                     @endforeach

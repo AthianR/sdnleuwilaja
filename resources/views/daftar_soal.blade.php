@@ -33,34 +33,88 @@
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <label for="jenis_soal">Jenis Soal</label>
-                                        <select name="jenis_soal" id="jenisSoal">
-                                            <option value="1">Bahasa Indonesia</option>
-                                        </select>
-                                        <br>
-                                        <label for="isi_soal">Isi Soal</label>
-                                        <textarea name="isi_soal" id="isi_soal" cols="45" rows="5" placeholder="Masukan Soal..."></textarea>
-                                        <label for="jawaban_benar">Jawaban Benar</label>
-                                        <input type="text">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-danger" type="button" data-dismiss="modal">Batal</button>
-                                        <form action="#">
-                                            {{-- @csrf
-                                            @method('post') --}}
+                                    <form action="{{ route('add.soal') }}" method="post">
+                                        @csrf
+                                        @method('post')
+                                        <div class="modal-body">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label for="jenis_soal">Jenis Soal</label>
+                                                        <select name="jenis_soal" id="jenisSoal" class="form-control">
+                                                            @foreach ($jenis as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->nama_jenis_soal }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-md-12">
+                                                        <label for="isi_soal">Isi Soal</label>
+                                                        <textarea name="isi_soal" id="isi_soal" cols="45" rows="5" class="form-control"
+                                                            placeholder="Masukan Soal..."></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-md-12">
+                                                        <label for="jawaban_benar">Jawaban Benar</label>
+                                                        <input type="text" name="jawaban_benar" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-md-12">
+                                                        <label for="jawaban_opsional_1">Jawaban Opsional 1</label>
+                                                        <input type="text" name="jawaban_opsional_1"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-md-12">
+                                                        <label for="jawaban_opsional_2">Jawaban Opsional 2</label>
+                                                        <input type="text" name="jawaban_opsional_2"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-md-12">
+                                                        <label for="jawaban_opsional_3">Jawaban Opsional 3</label>
+                                                        <input type="text" name="jawaban_opsional_3"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-danger" type="button"
+                                                data-dismiss="modal">Batal</button>
                                             <button type="submit" class="btn btn-primary">Simpan</button>
-                                        </form>
-                                        {{-- <a class="btn btn-primary" href="{{ route('logout') }}">Logout</a> --}}
-                                    </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="rounded-lg">Jenis Soal</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -99,16 +153,136 @@
                                             <td>{{ $item->jawaban_2 }}</td>
                                             <td>{{ $item->jawaban_3 }}</td>
                                             <td>
-                                                <button class="btn btn-primary"><i class="fa fa-cog"
+                                                <button data-toggle="modal" data-target="#modalEdit"
+                                                    class="btn btn-primary"><i class="fa fa-cog"
                                                         aria-hidden="true"></i></button>
-                                                <button class="btn btn-danger"><i class="fa fa-trash"
+                                                <button data-toggle="modal" data-target="#modalDelete"
+                                                    class="btn btn-danger"><i class="fa fa-trash"
                                                         aria-hidden="true"></i></button>
+
                                             </td>
                                         </tr>
+
+                                        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit Soal
+                                                        </h5>
+                                                        <button class="close" type="button" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="{{ route('update.soal', $item->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="modal-body">
+                                                            <div class="container">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <label for="jenis_soal">Jenis Soal</label>
+                                                                        <select name="jenis_soal" id="jenisSoal"
+                                                                            class="form-control">
+                                                                            <option value="{{ $item->id }}">
+                                                                                {{ $item->jenis_soal }}</option>
+                                                                            {{-- @foreach ($jenis as $js)
+                                                                                <option value="{{ $js->id }}">
+                                                                                    {{ $js->nama_jenis_soal }}</option>
+                                                                            @endforeach --}}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-12">
+                                                                        <label for="isi_soal">Isi Soal</label>
+                                                                        <textarea name="isi_soal" id="isi_soal" cols="45" rows="5" class="form-control">{{ $item->soal_quiz }}</textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-12">
+                                                                        <label for="jawaban_benar">Jawaban
+                                                                            Benar</label>
+                                                                        <input type="text" name="jawaban_benar"
+                                                                            value="{{ $item->jawaban_benar }}"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-12">
+                                                                        <label for="jawaban_opsional_1">Jawaban
+                                                                            Opsional 1</label>
+                                                                        <input type="text" name="jawaban_opsional_1"
+                                                                            value="{{ $item->jawaban_1 }}"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-12">
+                                                                        <label for="jawaban_opsional_2">Jawaban
+                                                                            Opsional 2</label>
+                                                                        <input type="text" name="jawaban_opsional_2"
+                                                                            value="{{ $item->jawaban_2 }}"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-12">
+                                                                        <label for="jawaban_opsional_3">Jawaban
+                                                                            Opsional 3</label>
+                                                                        <input type="text" name="jawaban_opsional_3"
+                                                                            value="{{ $item->jawaban_3 }}"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-danger" type="button"
+                                                                data-dismiss="modal">Batal</button>
+                                                            <button type="submit" class="btn btn-primary">Edit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi
+                                                            Hapus</h5>
+                                                        <button class="close" type="button" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Apakah yakin ingin menghapus data soal?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button"
+                                                            data-dismiss="modal">Batal</button>
+                                                        <form action="{{ route('destroy.soal', $item->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{-- {{ $soal->links() }} --}}
                         </div>
                     </div>
                 </div>

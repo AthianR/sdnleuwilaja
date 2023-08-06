@@ -51,11 +51,20 @@ class HomeController extends Controller
 
     public function soal(Request $id)
     {
-        $soal = SoalQuiz::select('jenis_soal.nama_jenis_soal as jenis_soal', 'soal_quiz.isi_soal_quiz as soal_quiz', 'soal_quiz.jawaban_benar as jawaban_benar', 'soal_quiz.jawaban_opsional_1 as jawaban_1', 'soal_quiz.jawaban_opsional_2 as jawaban_2', 'soal_quiz.jawaban_opsional_3 as jawaban_3')
+        $soal = SoalQuiz::select(
+            'jenis_soal.nama_jenis_soal as jenis_soal', 
+            'soal_quiz.id_jenis_soal as id_jenis', 
+            'soal_quiz.isi_soal_quiz as soal_quiz', 
+            'soal_quiz.jawaban_benar as jawaban_benar', 
+            'soal_quiz.jawaban_opsional_1 as jawaban_1', 
+            'soal_quiz.jawaban_opsional_2 as jawaban_2', 
+            'soal_quiz.jawaban_opsional_3 as jawaban_3',
+            'soal_quiz.id as id')
             ->join('jenis_soal', 'soal_quiz.id_jenis_soal', '=', 'jenis_soal.id')
             ->get();
+        $jenis = JenisSoal::all();
         // dd($soal);
-        return view('daftar_soal', compact('soal'));
+        return view('daftar_soal', compact('soal','jenis'));
     }
 
     public function leaderboard()
@@ -70,10 +79,13 @@ class HomeController extends Controller
 
     public function progres()
     {
-        $id = ProgressPemain::pluck('id');
-        $progres = Siswa::select('siswa.nama as nama_siswa', 'progress_pemain.progress_pemain as progres')
-            ->join('progress_pemain', 'siswa.id', '=', 'progress_pemain.id_siswa')
-            ->whereIn('progress_pemain', $id)
+        $progres = ProgressPemain::select(
+            'siswa.nama as nama_siswa', 
+            'siswa.NIK as nis', 
+            'progress_pemain.progress_pemain as progres',
+            'jenis_soal.nama_jenis_soal as jenis_soal')
+            ->join('siswa', 'progress_pemain.id_siswa', '=', 'siswa.id')
+            ->join('jenis_soal', 'progress_pemain.id_jenis_soal', '=', 'jenis_soal.id')
             ->get();
         // dd($progres);
 
@@ -82,15 +94,12 @@ class HomeController extends Controller
 
     public function storeSiswa(Request $request)
     {
-        // Validasi data yang diterima dari form input
         $request->validate([
-            'NIK' => 'required|unique:siswa',
+            'NIK' => 'required|numeric|unique:siswa',
             'nama' => 'required',
             'password' => 'required|min:8',
-            // Tambahkan validasi untuk kolom lain jika diperlukan
         ]);
 
-        // Membuat objek model Siswa dengan data dari form input
         $siswa = new Siswa();
         $siswa->NIK = $request->NIK;
         $siswa->nama = $request->nama;
@@ -98,32 +107,98 @@ class HomeController extends Controller
         $siswa->create_by = Auth::user()->id;
         $siswa->update_by = Auth::user()->id;
 
-        // Simpan data ke dalam database
         $siswa->save();
 
-        // Redirect ke halaman lain atau tampilkan pesan berhasil jika diperlukan
         return redirect()
             ->route('daftar.siswa')
             ->with('success', 'Data siswa berhasil disimpan.');
     }
 
+    public function storeSoal(Request $request){
+        $request->validate([
+            'jenis_soal' => 'required',
+            'isi_soal' => 'required|string|max:550',
+            'jawaban_benar' => 'required|string',
+            'jawaban_opsional_1' => 'required|string',
+            'jawaban_opsional_2' => 'required|string',
+            'jawaban_opsional_3' => 'required|string',
+        ]);
+
+        $soal = new SoalQuiz();
+        $soal->id_jenis_soal = $request->jenis_soal;
+        $soal->isi_soal_quiz = $request->isi_soal;
+        $soal->jawaban_benar = $request->jawaban_benar;
+        $soal->jawaban_opsional_1 = $request->jawaban_opsional_1;
+        $soal->jawaban_opsional_2 = $request->jawaban_opsional_2;
+        $soal->jawaban_opsional_3 = $request->jawaban_opsional_3;
+        $soal->create_by = Auth::user()->id;
+        $soal->update_by = Auth::user()->id;
+
+        $soal->save();
+
+        return redirect()
+            ->route('daftar.soal')
+            ->with('success', 'Data soal berhasil ditambahkan');
+    }
+
     public function destroySiswa($id)
     {
-        // Cari data siswa berdasarkan ID
         $siswa = Siswa::find($id);
-
-        // Jika data siswa ditemukan, hapus data dari database
-        if ($siswa) {
+        $hapusLeaderboard = Leaderboard::where('id_siswa', '=', $id)->delete();
+        $hapusProgress = ProgressPemain::where('id_siswa', '=', $id)->delete();
+        $hapusSiswa = Siswa::where('id', '=', $id)->delete();
+        if ($hapusLeaderboard && $hapusProgress && $hapusSiswa) {
             $siswa->delete();
-            // Redirect ke halaman lain atau tampilkan pesan berhasil jika diperlukan
             return redirect()
                 ->route('daftar.siswa')
                 ->with('success', 'Data siswa berhasil dihapus.');
         } else {
-            // Jika data siswa tidak ditemukan, tampilkan pesan error atau redirect ke halaman lain jika diperlukan
             return redirect()
                 ->route('daftar.siswa')
                 ->with('error', 'Data siswa tidak ditemukan.');
         }
     }
+
+    public function destroySoal($id)
+    {
+        $soal = SoalQuiz::find($id);
+        $hapusSoal = SoalQuiz::where('id', '=', $id)->delete();
+        if ($hapusSoal) {
+            $soal->delete();
+            return redirect()
+                ->route('daftar.soal')
+                ->with('success', 'Data soal berhasil dihapus.');
+        } else {
+            return redirect()
+                ->route('daftar.soal')
+                ->with('error', 'Data soal tidak ditemukan.');
+        }
+    }
+
+    public function updateSoal(Request $request, $id){
+        $soal = SoalQuiz::findOrFail($id);
+        dd($soal);
+        $request->validate([
+            'jenis_soal' => 'required',
+            'isi_soal' => 'required',
+            'jawaban_benar' => 'required',
+            'jawaban_opsional_1' => 'required',
+            'jawaban_opsional_2' => 'required',
+            'jawaban_opsional_3' => 'required',
+        ]);
+        // dd($soal);
+
+        // Update data siswa dengan data dari form
+        $soal->id_jenis_soal = $request->jenis_soal;
+        $soal->isi_soal_quiz = $request->isi_soal;
+        $soal->jawaban_benar = $request->jawaban_benar;
+        $soal->jawaban_opsional_1 = $request->jawaban_opsional_1;
+        $soal->jawaban_opsional_2 = $request->jawaban_opsional_2;
+        $soal->jawaban_opsional_3 = $request->jawaban_opsional_3;
+        // tambahkan atribut lain jika ada
+
+        $soal->save();
+
+        return redirect()->route('daftar.siswa')->with('success', 'Data siswa berhasil diupdate.');
+    }  
 }

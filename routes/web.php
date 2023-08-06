@@ -17,7 +17,7 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard')->middleware('auth');
@@ -27,4 +27,7 @@ Route::get('/daftar/leaderboard', [HomeController::class, 'leaderboard'])->name(
 Route::get('/daftar/progres', [HomeController::class, 'progres'])->name('daftar.progres')->middleware('auth');
 Route::get('/data/download/{format}', [HomeController::class, 'download'])->name('data.download')->middleware('auth');
 Route::post('/add/data/siswa', [HomeController::class, 'storeSiswa'])->name('add.siswa')->middleware('auth');
-Route::delete('destroy/siswa/{id}', [HomeController::class, 'destroySiswa'])->name('destroy.siswa');
+Route::post('/add/data/soal', [HomeController::class, 'storeSoal'])->name('add.soal')->middleware('auth');
+Route::delete('/destroy/siswa/{id}', [HomeController::class, 'destroySiswa'])->name('destroy.siswa')->middleware('auth');
+Route::delete('/destroy/soal/{id}', [HomeController::class, 'destroySoal'])->name('destroy.soal')->middleware('auth');
+Route::put('/update/soal/{id}', [HomeController::class, 'updateSoal'])->name('update.soal')->middleware('auth');

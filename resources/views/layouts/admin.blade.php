@@ -10,7 +10,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="shortcut icon" href="../icon/favicon-32x32.png" type="image/x-icon"> 
+    <link rel="shortcut icon" href="../icon/favicon-32x32.png" type="image/x-icon">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
@@ -42,9 +42,11 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion p-2" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center mt-2" href="{{ route('dashboard') }}">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center mt-2"
+                    href="{{ route('dashboard') }}">
                     <div class="sidebar-brand-icon">
-                        <img src="../icon/android-icon-48x48.png" style="border-radius: 30%" alt="" srcset="">
+                        <img src="../icon/android-icon-48x48.png" style="border-radius: 30%" alt=""
+                            srcset="">
                     </div>
                     <div class="sidebar-brand-text mx-3">SD Negeri Leuwilaja III</div>
                 </a>
@@ -84,7 +86,7 @@
                     </div>
                 </li>
 
-                
+
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
@@ -117,6 +119,21 @@
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
                         </button>
+
+                        @if (session('success'))
+                            <div id="alert-success" class="alert alert-success"
+                                style="display: flex; position: absolute; z-index: 1000">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            <div id="alert-error" class="alert alert-danger"
+                                style="display: flex; position: absolute; z-index: 1000">
+                                @foreach ($errors->all() as $error)
+                                    <p>{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
 
                         <!-- Topbar Search -->
                         {{-- <form
@@ -293,7 +310,8 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                    <span
+                                        class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                                     <img class="img-profile rounded-circle" src="../img/undraw_profile.svg">
                                 </a>
                                 <!-- Dropdown - User Information -->
@@ -369,7 +387,7 @@
                             @csrf
                             @method('post')
                             <button type="submit" class="btn btn-danger">Ya</button>
-                          </form>
+                        </form>
                         {{-- <a class="btn btn-primary" href="{{ route('logout') }}">Logout</a> --}}
                     </div>
                 </div>

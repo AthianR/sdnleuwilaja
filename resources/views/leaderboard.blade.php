@@ -10,24 +10,24 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                {{-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Siswa</h1>
                     <!-- users/index.blade.php -->
-                    {{-- <a href="{{ route('data.download', ['format' => 'csv']) }}" class="btn btn-primary">Download as CSV</a>
+                    <a href="{{ route('data.download', ['format' => 'csv']) }}" class="btn btn-primary">Download as CSV</a>
                     <a href="{{ route('data.download', ['format' => 'excel']) }}" class="btn btn-success">Download as
                         Excel</a>
-                    <a href="{{ route('data.download', ['format' => 'pdf']) }}" class="btn btn-danger">Download as PDF</a> --}}
+                    <a href="{{ route('data.download', ['format' => 'pdf']) }}" class="btn btn-danger">Download as PDF</a>
 
                     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i>Download</a>
-                </div>
+                </div> --}}
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary">Leaderboard Siswa</h6>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"
-                                aria-hidden="true"></i></button>
+                        {{-- <button class="btn btn-primary" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"
+                                aria-hidden="true"></i></button> --}}
 
                         <!-- Add Data Modal-->
                         <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
@@ -58,7 +58,16 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataLeaderboard" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Jenis Soal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
                                 <thead>
                                     <tr>
                                         <th>No</th>

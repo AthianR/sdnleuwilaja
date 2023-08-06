@@ -39,13 +39,18 @@
                                             <div class="form-group d-flex justify-content-between">
                                                 <label for="NIK">NIS</label>
                                                 <input type="number" name="NIK" id="NIK" style="width: 70%"
-                                                    placeholder="NIS Siswa" required>
+                                                    placeholder="NIS Siswa" value="{{ old('NIK') }}" required>
                                             </div>
+                                            @if ($errors->has('NIK'))
+                                                <div class="alert alert-danger">
+                                                    {{ $errors->first('NIK') }}
+                                                </div>
+                                            @endif
 
                                             <div class="form-group d-flex justify-content-between">
                                                 <label for="nama">Nama Siswa</label>
                                                 <input type="text" name="nama" id="nama" style="width: 70%"
-                                                    placeholder="Nama Siswa" required>
+                                                    placeholder="Nama Siswa" value="{{ old('nama') }}" required>
                                             </div>
 
                                             <div class="form-group d-flex justify-content-between">
@@ -53,6 +58,11 @@
                                                 <input type="password" name="password" id="password" style="width: 70%"
                                                     placeholder="Password" required>
                                             </div>
+                                            @if ($errors->has('password'))
+                                                <div class="alert alert-danger">
+                                                    {{ $errors->first('password') }}
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="modal-footer">
                                             <button class="btn btn-danger" type="button"
@@ -102,12 +112,13 @@
                                             <td>{{ $item->nama }}</td>
                                             <td>{{ $item->password }}</td>
                                             <td>
-                                                {{-- {{ route('siswa.edit', $siswa->id) }} --}}
-                                                <a href="" class="btn btn-primary"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                                <a href="" class="btn btn-primary"><i class="fa fa-cog"
+                                                        aria-hidden="true"></i></a>
                                                 <form action="{{ route('destroy.siswa', $item->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"
+                                                            aria-hidden="true"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
