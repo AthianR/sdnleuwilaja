@@ -124,3 +124,37 @@ $(document).ready(function () {
         },
     });
 });
+
+function confirmDelete() {
+    Swal.fire({
+        title: "Konfirmasi Hapus",
+        text: "Apakah Anda yakin ingin menghapus data soal?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Hapus",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById("deleteForm").submit();
+        }
+    });
+}
+
+function confirmDelete() {
+    Swal.fire({
+        title: "Konfirmasi Hapus",
+        text: "Apakah Anda yakin ingin menghapus data soal?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Hapus",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById("deleteFormSiswa").submit();
+        }
+    });
+}

@@ -114,10 +114,10 @@
                                             <td>
                                                 <a href="" class="btn btn-primary"><i class="fa fa-cog"
                                                         aria-hidden="true"></i></a>
-                                                <form action="{{ route('destroy.siswa', $item->id) }}" method="POST">
+                                                <form action="{{ route('destroy.siswa', $item->id) }}" method="POST" id="deleteFormSiswa">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"
+                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete()"><i class="fa fa-trash"
                                                             aria-hidden="true"></i></button>
                                                 </form>
                                             </td>

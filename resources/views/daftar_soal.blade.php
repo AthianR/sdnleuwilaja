@@ -156,10 +156,14 @@
                                                 <button data-toggle="modal" data-target="#modalEdit"
                                                     class="btn btn-primary"><i class="fa fa-cog"
                                                         aria-hidden="true"></i></button>
-                                                <button data-toggle="modal" data-target="#modalDelete"
-                                                    class="btn btn-danger"><i class="fa fa-trash"
-                                                        aria-hidden="true"></i></button>
-
+                                                <form action="{{ route('destroy.soal', $item->id) }}" method="POST"
+                                                    id="deleteForm">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-danger"
+                                                        onclick="confirmDelete()"><i class="fa fa-trash"
+                                                            aria-hidden="true"></i></button>
+                                                </form>
                                             </td>
                                         </tr>
 

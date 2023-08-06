@@ -44,7 +44,6 @@ class HomeController extends Controller
     public function siswa()
     {
         $siswa = Siswa::paginate(10);
-        // dd($siswa);
 
         return view('daftar_siswa', compact('siswa'));
     }
@@ -58,13 +57,13 @@ class HomeController extends Controller
             'soal_quiz.jawaban_benar as jawaban_benar', 
             'soal_quiz.jawaban_opsional_1 as jawaban_1', 
             'soal_quiz.jawaban_opsional_2 as jawaban_2', 
-            'soal_quiz.jawaban_opsional_3 as jawaban_3',
+            'soal_quiz.jawaban_opsional_3 as jawaban_3', 
             'soal_quiz.id as id')
             ->join('jenis_soal', 'soal_quiz.id_jenis_soal', '=', 'jenis_soal.id')
             ->get();
         $jenis = JenisSoal::all();
         // dd($soal);
-        return view('daftar_soal', compact('soal','jenis'));
+        return view('daftar_soal', compact('soal', 'jenis'));
     }
 
     public function leaderboard()
@@ -79,11 +78,7 @@ class HomeController extends Controller
 
     public function progres()
     {
-        $progres = ProgressPemain::select(
-            'siswa.nama as nama_siswa', 
-            'siswa.NIK as nis', 
-            'progress_pemain.progress_pemain as progres',
-            'jenis_soal.nama_jenis_soal as jenis_soal')
+        $progres = ProgressPemain::select('siswa.nama as nama_siswa', 'siswa.NIK as nis', 'progress_pemain.progress_pemain as progres', 'jenis_soal.nama_jenis_soal as jenis_soal')
             ->join('siswa', 'progress_pemain.id_siswa', '=', 'siswa.id')
             ->join('jenis_soal', 'progress_pemain.id_jenis_soal', '=', 'jenis_soal.id')
             ->get();
@@ -114,7 +109,8 @@ class HomeController extends Controller
             ->with('success', 'Data siswa berhasil disimpan.');
     }
 
-    public function storeSoal(Request $request){
+    public function storeSoal(Request $request)
+    {
         $request->validate([
             'jenis_soal' => 'required',
             'isi_soal' => 'required|string|max:550',
@@ -162,20 +158,22 @@ class HomeController extends Controller
     public function destroySoal($id)
     {
         $soal = SoalQuiz::find($id);
-        $hapusSoal = SoalQuiz::where('id', '=', $id)->delete();
-        if ($hapusSoal) {
-            $soal->delete();
-            return redirect()
-                ->route('daftar.soal')
-                ->with('success', 'Data soal berhasil dihapus.');
-        } else {
+
+        if (!$soal) {
             return redirect()
                 ->route('daftar.soal')
                 ->with('error', 'Data soal tidak ditemukan.');
         }
+
+        $soal->delete();
+
+        return redirect()
+            ->route('daftar.soal')
+            ->with('success', 'Data soal berhasil dihapus.');
     }
 
-    public function updateSoal(Request $request, $id){
+    public function updateSoal(Request $request, $id)
+    {
         $soal = SoalQuiz::findOrFail($id);
         dd($soal);
         $request->validate([
@@ -199,6 +197,8 @@ class HomeController extends Controller
 
         $soal->save();
 
-        return redirect()->route('daftar.siswa')->with('success', 'Data siswa berhasil diupdate.');
-    }  
+        return redirect()
+            ->route('daftar.siswa')
+            ->with('success', 'Data siswa berhasil diupdate.');
+    }
 }
