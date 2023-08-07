@@ -12,6 +12,7 @@ use App\Models\ProgressPemain;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Ui\Presets\React;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -37,8 +38,60 @@ class HomeController extends Controller
         $countSoal = DB::table('soal_quiz')->count();
         $countSiswa = DB::table('siswa')->count();
         $countJenisSoal = DB::table('jenis_soal')->count();
+        $progres = ProgressPemain::all();
+        $progresIpa = ProgressPemain::select(
+            'progress_pemain.id_jenis_soal as id_jenis',
+            DB::raw('SUM(progress_pemain.progress_pemain) as total_progres')
+        )
+        ->where('progress_pemain.id_jenis_soal', '=', 1)
+        ->groupBy('progress_pemain.id_jenis_soal')
+        ->get();
+
+        $progresIps = ProgressPemain::select(
+            'progress_pemain.id_jenis_soal as id_jenis',
+            DB::raw('SUM(progress_pemain.progress_pemain) as total_progres')
+        )
+        ->where('progress_pemain.id_jenis_soal', '=', 2)
+        ->groupBy('progress_pemain.id_jenis_soal')
+        ->get();
+
+        $progresBi = ProgressPemain::select(
+            'progress_pemain.id_jenis_soal as id_jenis',
+            DB::raw('SUM(progress_pemain.progress_pemain) as total_progres')
+        )
+        ->where('progress_pemain.id_jenis_soal', '=', 3)
+        ->groupBy('progress_pemain.id_jenis_soal')
+        ->get();
+
+        $progresSb = ProgressPemain::select(
+            'progress_pemain.id_jenis_soal as id_jenis',
+            DB::raw('SUM(progress_pemain.progress_pemain) as total_progres')
+        )
+        ->where('progress_pemain.id_jenis_soal', '=', 4)
+        ->groupBy('progress_pemain.id_jenis_soal')
+        ->get();
+
+        $progresPk = ProgressPemain::select(
+            'progress_pemain.id_jenis_soal as id_jenis',
+            DB::raw('SUM(progress_pemain.progress_pemain) as total_progres')
+        )
+        ->where('progress_pemain.id_jenis_soal', '=', 5)
+        ->groupBy('progress_pemain.id_jenis_soal')
+        ->get();
+        // dd($progresIpa,$progresIps,$progresBi,$progresSb,$progresPk);
         // dd($countSoal, $countSiswa, $countJenisSoal);
-        return view('home', compact('countSiswa', 'countSoal', 'countJenisSoal'));
+        return view('home', 
+        compact(
+            'countSiswa', 
+            'countSoal', 
+            'countJenisSoal', 
+            'progres',
+            'progresIpa',
+            'progresIps',
+            'progresBi',
+            'progresSb',
+            'progresPk'
+            ));
     }
 
     public function siswa()
@@ -92,7 +145,7 @@ class HomeController extends Controller
         $request->validate([
             'NIK' => 'required|numeric|unique:siswa',
             'nama' => 'required',
-            'password' => 'required|min:8',
+            'password' => 'required|min:4',
         ]);
 
         $siswa = new Siswa();
@@ -175,7 +228,6 @@ class HomeController extends Controller
     public function updateSoal(Request $request, $id)
     {
         $soal = SoalQuiz::findOrFail($id);
-        dd($soal);
         $request->validate([
             'jenis_soal' => 'required',
             'isi_soal' => 'required',
@@ -198,7 +250,58 @@ class HomeController extends Controller
         $soal->save();
 
         return redirect()
-            ->route('daftar.siswa')
-            ->with('success', 'Data siswa berhasil diupdate.');
+            ->route('daftar.soal')
+            ->with('success', 'Data soal berhasil diupdate.');
+    }
+
+    public function editSoal($id){
+        $jenis = JenisSoal::all();
+        $soal = SoalQuiz::findOrFail($id);
+        $soalfull = SoalQuiz::select(
+            'jenis_soal.nama_jenis_soal as jenis_soal', 
+            'soal_quiz.id_jenis_soal as id_jenis', 
+            'soal_quiz.isi_soal_quiz as soal_quiz', 
+            'soal_quiz.jawaban_benar as jawaban_benar', 
+            'soal_quiz.jawaban_opsional_1 as jawaban_1', 
+            'soal_quiz.jawaban_opsional_2 as jawaban_2', 
+            'soal_quiz.jawaban_opsional_3 as jawaban_3', 
+            'soal_quiz.id as id_soal')
+            ->join('jenis_soal', 'soal_quiz.id_jenis_soal', '=', 'jenis_soal.id')
+            ->where('soal_quiz.id', $id)
+            ->first();
+        // dd($soalfull);
+        return view('edit_soal', compact('soal','soalfull','jenis'));
+    }
+
+    public function editSiswa($id){
+        $siswa = Siswa::findorfail($id);
+        return view('edit_siswa', compact('siswa'));
+    }
+
+    public function updateSiswa(Request $request, $id)
+    {
+        // Validasi data yang dikirim dari form
+        $request->validate([
+            'nama' => 'required',
+            'password' => 'required|min:4',
+            'konfirmasi_password' => 'required|same:password'
+        ]);
+
+        // Cari data siswa berdasarkan ID
+        $siswa = Siswa::find($id);
+
+        // Periksa apakah data siswa ditemukan
+        if (!$siswa) {
+            return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
+        }
+
+        // Update data siswa dengan data yang dikirim dari form
+        $siswa->nama = $request->nama;
+        $siswa->password = Hash::make($request->password); // Hash password baru sebelum menyimpan
+
+        // Simpan perubahan data siswa
+        $siswa->save();
+
+        return redirect()->route('daftar.siswa')->with('success', 'Data siswa berhasil diperbarui.');
     }
 }

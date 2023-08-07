@@ -10,7 +10,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="shortcut icon" href="../icon/favicon-32x32.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../icon/favicon-32x32.png" type="image/x-icon" style="border-radius: 50%">
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="../css/fontawesome.min.css">

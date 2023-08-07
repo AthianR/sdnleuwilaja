@@ -30,4 +30,8 @@ Route::post('/add/data/siswa', [HomeController::class, 'storeSiswa'])->name('add
 Route::post('/add/data/soal', [HomeController::class, 'storeSoal'])->name('add.soal')->middleware('auth');
 Route::delete('/destroy/siswa/{id}', [HomeController::class, 'destroySiswa'])->name('destroy.siswa')->middleware('auth');
 Route::delete('/destroy/soal/{id}', [HomeController::class, 'destroySoal'])->name('destroy.soal')->middleware('auth');
+Route::get('/edit/soal/{id}', [HomeController::class, 'editSoal'])->name('edit.soal')->middleware('auth');
+Route::get('/edit/siswa/{id}', [HomeController::class, 'editSiswa'])->name('edit.siswa')->middleware('auth');
 Route::put('/update/soal/{id}', [HomeController::class, 'updateSoal'])->name('update.soal')->middleware('auth');
+Route::put('/update/siswa/{id}', [HomeController::class, 'updateSiswa'])->name('update.siswa')->middleware('auth');
+Route::get('/progress', [HomeController::class, 'getProgres']);

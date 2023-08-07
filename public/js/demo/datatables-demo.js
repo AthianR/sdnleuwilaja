@@ -138,3 +138,15 @@ $(document).ready(function () {
         },
     });
 });
+
+document.getElementById("jenisSoal").addEventListener("change", function () {
+    var selectedValue = this.value;
+    if (selectedValue === "") {
+        // Jika tidak ada jenis soal yang dipilih, tampilkan alert
+        document.getElementById("alertMessage").innerHTML =
+            '<div class="alert alert-danger" role="alert">Pilih jenis soal terlebih dahulu!</div>';
+    } else {
+        // Jika jenis soal sudah dipilih, hapus alert
+        document.getElementById("alertMessage").innerHTML = "";
+    }
+});

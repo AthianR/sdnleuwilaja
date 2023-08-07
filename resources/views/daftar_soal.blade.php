@@ -153,9 +153,8 @@
                                             <td>{{ $item->jawaban_2 }}</td>
                                             <td>{{ $item->jawaban_3 }}</td>
                                             <td class="d-flex align-items-center">
-                                                <button data-toggle="modal" data-target="#modalEdit"
-                                                    class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
-                                                        aria-hidden="true"></i></button>
+                                                <a href="{{ route('edit.soal', $item->id) }}" class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
+                                                    aria-hidden="true"></i></a>
                                                 <form action="{{ route('destroy.soal', $item->id) }}" method="POST"
                                                     id="deleteFormSoal">
                                                     @csrf
@@ -167,95 +166,6 @@
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Edit Soal
-                                                        </h5>
-                                                        <button class="close" type="button" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    <form action="{{ route('update.soal', $item->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="modal-body">
-                                                            <div class="container">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <label for="jenis_soal">Jenis Soal</label>
-                                                                        <select name="jenis_soal" id="jenisSoal"
-                                                                            class="form-control">
-                                                                            <option value="{{ $item->id }}">
-                                                                                {{ $item->jenis_soal }}</option>
-                                                                            {{-- @foreach ($jenis as $js)
-                                                                                <option value="{{ $js->id }}">
-                                                                                    {{ $js->nama_jenis_soal }}</option>
-                                                                            @endforeach --}}
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row mt-3">
-                                                                    <div class="col-md-12">
-                                                                        <label for="isi_soal">Isi Soal</label>
-                                                                        <textarea name="isi_soal" id="isi_soal" cols="45" rows="5" class="form-control">{{ $item->soal_quiz }}</textarea>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row mt-3">
-                                                                    <div class="col-md-12">
-                                                                        <label for="jawaban_benar">Jawaban
-                                                                            Benar</label>
-                                                                        <input type="text" name="jawaban_benar"
-                                                                            value="{{ $item->jawaban_benar }}"
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row mt-3">
-                                                                    <div class="col-md-12">
-                                                                        <label for="jawaban_opsional_1">Jawaban
-                                                                            Opsional 1</label>
-                                                                        <input type="text" name="jawaban_opsional_1"
-                                                                            value="{{ $item->jawaban_1 }}"
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row mt-3">
-                                                                    <div class="col-md-12">
-                                                                        <label for="jawaban_opsional_2">Jawaban
-                                                                            Opsional 2</label>
-                                                                        <input type="text" name="jawaban_opsional_2"
-                                                                            value="{{ $item->jawaban_2 }}"
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row mt-3">
-                                                                    <div class="col-md-12">
-                                                                        <label for="jawaban_opsional_3">Jawaban
-                                                                            Opsional 3</label>
-                                                                        <input type="text" name="jawaban_opsional_3"
-                                                                            value="{{ $item->jawaban_3 }}"
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-danger" type="button"
-                                                                data-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-primary">Edit</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">

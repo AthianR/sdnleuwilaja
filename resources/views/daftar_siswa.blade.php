@@ -84,9 +84,6 @@
                                         <th>Nama Siswa</th>
                                         <th>Password</th>
                                         <th>Aksi</th>
-                                        {{-- <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th> --}}
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -96,9 +93,6 @@
                                         <th>Nama Siswa</th>
                                         <th>Password</th>
                                         <th>Aksi</th>
-                                        {{-- <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th> --}}
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -110,14 +104,25 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $item->NIK }}</td>
                                             <td>{{ $item->nama }}</td>
-                                            <td>{{ $item->password }}</td>
+                                            <td>
+                                                {{ $item->password }}
+                                            </td>
+                                            {{-- <td>
+                                                <button href="#" class="btn btn-info btn-circle btn-sm">
+                                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                                </button>
+                                            </td> --}}
                                             <td class="d-flex align-items-center">
-                                                <a href="#" class="btn btn-primary me-2"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                                <a href="{{ route('edit.siswa', $item->id) }}" class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
+                                                    aria-hidden="true"></i></a>
+                                                {{-- <button data-toggle="modal" data-target="#modalEdit"
+                                                    class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
+                                                        aria-hidden="true"></i></button> --}}
                                                 <form action="{{ route('destroy.siswa', $item->id) }}" method="POST" id="deleteFormSiswa">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete('siswa')">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('siswa')">
+                                                        <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
                                                     </button>
                                                 </form>
                                             </td>
