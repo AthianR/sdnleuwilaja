@@ -111,21 +111,20 @@
                                             <td>{{ $item->NIK }}</td>
                                             <td>{{ $item->nama }}</td>
                                             <td>{{ $item->password }}</td>
-                                            <td>
-                                                <a href="" class="btn btn-primary"><i class="fa fa-cog"
-                                                        aria-hidden="true"></i></a>
+                                            <td class="d-flex align-items-center">
+                                                <a href="#" class="btn btn-primary me-2"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                                 <form action="{{ route('destroy.siswa', $item->id) }}" method="POST" id="deleteFormSiswa">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete()"><i class="fa fa-trash"
-                                                            aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete('siswa')">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $siswa->links() }}
                         </div>
                     </div>
                 </div>

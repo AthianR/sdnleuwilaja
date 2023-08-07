@@ -152,16 +152,16 @@
                                             <td>{{ $item->jawaban_1 }}</td>
                                             <td>{{ $item->jawaban_2 }}</td>
                                             <td>{{ $item->jawaban_3 }}</td>
-                                            <td>
+                                            <td class="d-flex align-items-center">
                                                 <button data-toggle="modal" data-target="#modalEdit"
-                                                    class="btn btn-primary"><i class="fa fa-cog"
+                                                    class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
                                                         aria-hidden="true"></i></button>
                                                 <form action="{{ route('destroy.soal', $item->id) }}" method="POST"
-                                                    id="deleteForm">
+                                                    id="deleteFormSoal">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-danger"
-                                                        onclick="confirmDelete()"><i class="fa fa-trash"
+                                                    <button type="button" class="btn btn-sm btn-danger"
+                                                        onclick="confirmDelete('soal')"><i class="fa fa-trash fa-sm"
                                                             aria-hidden="true"></i></button>
                                                 </form>
                                             </td>

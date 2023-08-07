@@ -2,18 +2,36 @@
 $(document).ready(function () {
     setTimeout(function () {
         $("#alert-success").fadeOut("slow");
-    }, 2000);
+    }, 3000);
 });
 
 $(document).ready(function () {
     setTimeout(function () {
         $("#alert-error").fadeOut("slow");
-    }, 2000);
+    }, 3000);
 });
 
-$(document).ready(function () {
-    // $("#dataTable").DataTable();
+function confirmDelete(type) {
+    var deleteFormId = type === "soal" ? "deleteFormSoal" : "deleteFormSiswa";
+    var confirmText = type === "soal" ? "Soal" : "Siswa";
 
+    Swal.fire({
+        title: "Konfirmasi Hapus",
+        text: `Apakah Anda yakin ingin menghapus data ${confirmText}?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Hapus",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(deleteFormId).submit();
+        }
+    });
+}
+
+$(document).ready(function () {
     new DataTable("#dataTable", {
         initComplete: function () {
             var table = this;
@@ -50,8 +68,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    // $("#dataTable").DataTable();
-
     new DataTable("#dataLeaderboard", {
         initComplete: function () {
             var table = this;
@@ -88,8 +104,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    // $("#dataTable").DataTable();
-
     new DataTable("#dataProgres", {
         initComplete: function () {
             var table = this;
@@ -124,37 +138,3 @@ $(document).ready(function () {
         },
     });
 });
-
-function confirmDelete() {
-    Swal.fire({
-        title: "Konfirmasi Hapus",
-        text: "Apakah Anda yakin ingin menghapus data soal?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Hapus",
-        cancelButtonText: "Batal",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.getElementById("deleteForm").submit();
-        }
-    });
-}
-
-function confirmDelete() {
-    Swal.fire({
-        title: "Konfirmasi Hapus",
-        text: "Apakah Anda yakin ingin menghapus data soal?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Hapus",
-        cancelButtonText: "Batal",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.getElementById("deleteFormSiswa").submit();
-        }
-    });
-}
