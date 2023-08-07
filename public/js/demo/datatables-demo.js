@@ -32,7 +32,7 @@ function confirmDelete(type) {
 }
 
 $(document).ready(function () {
-    new DataTable("#dataTable", {
+    new DataTable("#dataTableSiswa", {
         initComplete: function () {
             var table = this;
 
