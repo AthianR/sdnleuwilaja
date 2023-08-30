@@ -9,12 +9,6 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                {{-- <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                    For more information about DataTables, please visit the <a target="_blank"
-                        href="https://datatables.net">official DataTables documentation</a>.</p> --}}
-
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between">
@@ -153,15 +147,17 @@
                                             <td>{{ $item->jawaban_2 }}</td>
                                             <td>{{ $item->jawaban_3 }}</td>
                                             <td class="d-flex align-items-center">
-                                                <a href="{{ route('edit.soal', $item->id) }}" class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
-                                                    aria-hidden="true"></i></a>
+                                                <a href="{{ route('edit.soal', $item->id) }}"
+                                                    class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
+                                                        aria-hidden="true"></i></a>
                                                 <form action="{{ route('destroy.soal', $item->id) }}" method="POST"
-                                                    id="deleteFormSoal">
+                                                    id="deleteFormSoal_{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger"
-                                                        onclick="confirmDelete('soal')"><i class="fa fa-trash fa-sm"
-                                                            aria-hidden="true"></i></button>
+                                                        onclick="confirmDeleteSoal('{{ $item->id }}')">
+                                                        <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>

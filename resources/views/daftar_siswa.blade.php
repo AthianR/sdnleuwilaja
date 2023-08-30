@@ -76,7 +76,16 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTableSiswa" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataSiswa" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>NIS</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -107,21 +116,21 @@
                                             <td>
                                                 {{ $item->password }}
                                             </td>
-                                            {{-- <td>
-                                                <button href="#" class="btn btn-info btn-circle btn-sm">
-                                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                                                </button>
-                                            </td> --}}
                                             <td class="d-flex align-items-center">
-                                                <a href="{{ route('edit.siswa', $item->id) }}" class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
-                                                    aria-hidden="true"></i></a>
-                                                {{-- <button data-toggle="modal" data-target="#modalEdit"
-                                                    class="btn btn-sm btn-primary me-2"><i class="fa fa-cog fa-sm"
-                                                        aria-hidden="true"></i></button> --}}
-                                                <form action="{{ route('destroy.siswa', $item->id) }}" method="POST" id="deleteFormSiswa">
+                                                <a href="{{ route('edit.siswa', $item->id) }}"
+                                                    class="btn btn-sm btn-primary me-2">
+                                                    <i class="fa fa-cog fa-sm" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="{{ route('tampil.siswa', $item->id) }}"
+                                                    class="btn btn-sm btn-info me-2">
+                                                    <i class="fa fa-eye fa-sm" aria-hidden="true"></i>
+                                                </a>
+                                                <form action="{{ route('destroy.siswa', $item->id) }}" method="POST"
+                                                    id="deleteFormSiswa_{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('siswa')">
+                                                    <button type="button" class="btn btn-sm btn-danger"
+                                                        onclick="confirmDeleteSiswa('{{ $item->id }}')">
                                                         <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
                                                     </button>
                                                 </form>

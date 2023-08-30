@@ -22,6 +22,9 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::get('/daftar/siswa', [HomeController::class, 'siswa'])->name('daftar.siswa')->middleware('auth');
+
+Route::get('/daftar/siswa/{id}', [HomeController::class, 'tampil'])->name('tampil.siswa')->middleware('auth');
+
 Route::get('/daftar/soal', [HomeController::class, 'soal'])->name('daftar.soal')->middleware('auth');
 Route::get('/daftar/leaderboard', [HomeController::class, 'leaderboard'])->name('daftar.leaderboard')->middleware('auth');
 Route::get('/daftar/progres', [HomeController::class, 'progres'])->name('daftar.progres')->middleware('auth');

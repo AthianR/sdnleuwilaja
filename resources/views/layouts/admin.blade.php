@@ -8,7 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Halaman Utama</title>
+    {{-- <title>{{ config('app.name', 'Mhazel Store') }}</title> --}}
 
     <link rel="shortcut icon" href="{{ asset('../icon/favicon-32x32.png') }}" type="image/x-icon"
         style="border-radius: 50%">
@@ -18,8 +19,6 @@
     <!-- Custom fonts for this template-->
     <link href="{{ asset('../css/fontawesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('../css/fontawesome/all.css') }}" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="../css/fontawesome.min.css">
-    <link rel="stylesheet" href="../css/fontawesome/all.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css"
         integrity="sha512-QfDd74mlg8afgSqm3Vq2Q65e9b3xMhJB4GZ9OcHDVy1hZ6pqBJPWWnMsKDXM7NINoKqJANNGBuVRIpIJ5dogfA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
