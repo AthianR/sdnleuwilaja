@@ -71,8 +71,6 @@ class HomeController extends Controller
     public function siswa()
     {
         $siswa = Siswa::all();
-        // dd($siswa);
-        // $siswa = Siswa::with('progressPemain')->get();
 
         return view('daftar_siswa', compact('siswa'));
     }
@@ -84,12 +82,18 @@ class HomeController extends Controller
         $progress = DB::table('siswa')
             ->join('progress_pemain', 'siswa.id', '=', 'progress_pemain.id_siswa')
             ->join('jenis_soal', 'progress_pemain.id_jenis_soal', '=', 'jenis_soal.id')
-            ->where('id_siswa', $id)
+            ->where('siswa.id', $id)
             ->get();
-        $singleProgress = $progress->first();
-        // dd($singleProgress);
-        // dd($siswa_id);
-        return view('tampil_siswa', compact('siswa', 'siswa_id', 'progress', 'singleProgress'));
+            // dd($progress);
+
+        $nilai = DB::table('siswa')
+            ->join('leaderboard', 'siswa.id', '=', 'leaderboard.id_siswa')
+            ->join('jenis_soal', 'leaderboard.id_jenis_soal', '=', 'jenis_soal.id')
+            ->where('siswa.id', $id)
+            ->get();
+            // dd($progres);
+
+        return view('tampil_siswa', compact('siswa', 'siswa_id', 'progress', 'nilai'));
     }
 
     public function soal(Request $id)
@@ -175,28 +179,20 @@ class HomeController extends Controller
 
     public function destroySiswa($id)
     {
-        try {
-            DB::beginTransaction();
-            $hapusLeaderboard = Leaderboard::where('id_siswa', '=', $id)->delete();
-            $hapusProgress = ProgressPemain::where('id_siswa', '=', $id)->delete();
-            $hapusSiswa = Siswa::where('id', '=', $id)->delete();
-            if ($hapusLeaderboard && $hapusProgress && $hapusSiswa) {
-                DB::commit();
-                return redirect()
-                    ->route('daftar.siswa')
-                    ->with('success', 'Data siswa berhasil dihapus.');
-            } else {
-                DB::rollback();
-                return redirect()
-                    ->route('daftar.siswa')
-                    ->with('error', 'Data siswa tidak ditemukan.');
-            }
-        } catch (\Exception $e) {
-            DB::rollback();
+        $siswa = Siswa::find($id);
+
+        if (!$siswa) {
             return redirect()
                 ->route('daftar.siswa')
-                ->with('error', 'Terjadi kesalahan saat menghapus data siswa.');
+                ->with('error', 'Data siswa tidak ditemukan.');
         }
+        $hapusLeaderboard = Leaderboard::where('id_siswa', '=', $id)->delete();
+        $hapusProgress = ProgressPemain::where('id_siswa', '=', $id)->delete();
+        $siswa->delete();
+
+        return redirect()
+            ->route('daftar.siswa')
+            ->with('success', 'Data siswa berhasil dihapus.');
     }
 
     public function destroySoal($id)
